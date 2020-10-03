@@ -1,37 +1,48 @@
-export
- class Timer {
-  constructor({dateNow, targetDate}) {
-    this.dateNow = dateNow;
-    this.targetDate = targetDate;
-    this.time = this.targetDate-this.dateNow;
+export 
+let debounce = require('lodash.debounce');
+  const fragment = document.createDocumentFragment();
+const containerDom = document.querySelector('.container');
+const capitalDom = document.querySelector('.capital');
+const populationDom = document.querySelector('.population');
+const languagesDom = document.querySelector('.languages');
+const imgDom = document.querySelector('img');
+const ulForRenderLi = document.querySelector('.list_render')
+console.log(languagesDom)
+const stopDefaultBehaviorForm = document.querySelector('form');
+stopDefaultBehaviorForm.addEventListener('submit', even => {
+  even.preventDefault();
+})
+const handleInput = document.querySelector('input');
+handleInput.addEventListener('input', debounce((ev) => {
+  ulForRenderLi.innerHTML = '';
+  const keyWord = ev.explicitOriginalTarget.value;
+  const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
+
+  fetch(keyRequest)
+  .then(response => {
+   return response.json();
+  })
+  .then((data) => {
+    const foo = data.reduce((acc,elem ,index) =>{
+      acc.push(elem.name)
+      return acc;
+    },[]);
+    foo.forEach(element => {
+      const RenderLiDom = document.createElement('li');
+      RenderLiDom.classList.add('list_render_li');
+      RenderLiDom.textContent = element;
+      fragment.appendChild(RenderLiDom);
+    });
+    ulForRenderLi.appendChild(fragment);
+    console.log(ulForRenderLi)
+  })
+  .then( (elem) => {
+    console.log(elem)
   }
-  showTimes(){
-    return this.time;
-  }
-  getDays(){
-    return Math.floor(this.time / (1000 * 60 * 60 * 24));
-  }
-  getHours(){
-    return  Math.floor((this.time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  };
-  getMins(){
-    return Math.floor((this.time % (1000 * 60 * 60)) / (1000 * 60));
-  };
-  getSecs(){
-    return  Math.floor((this.time % (1000 * 60)) / 1000);
-  }
-}
-const showDay = document.querySelector('span[data-value="days"]');
-const showHour = document.querySelector('span[data-value="hours"]');
-const showMins = document.querySelector('span[data-value="mins"]');
-const showSecs = document.querySelector('span[data-value="secs"]');
-const startTimer = () => {
-  setInterval(() => {
-    const newTimer = new Timer({dateNow : Date.now(),targetDate : new Date(2021, 0, 30).getTime()}); 
-    showDay.textContent = `${newTimer.getDays()}`;
-    showHour.textContent = `${newTimer.getHours()}`;
-    showMins.textContent = `${newTimer.getMins()}`;
-    showSecs.textContent = `${newTimer.getSecs()}`;
-  }, 1000)
-};
-startTimer()
+  )
+  .catch(error => {
+  });
+}, 500 ));
+
+
+ 
