@@ -1,0 +1,48 @@
+.timer{
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  text-align: center;
+  color: orange;
+  font-size: 100px;
+  background-color: rgb(230, 214, 214);
+}
+span{
+  margin-right:5px;
+}
+.value-first{
+  color: greenyellow;
+}
+.label-first{
+  color: rgb(15, 214, 15);
+}
+.value-second{
+color: yellow;
+}
+.label-second{
+  color: orange;
+}
+.value-third{
+  color: aquamarine;
+}
+.label-third{
+  color: rgb(12, 176, 226);
+
+}
+.value-fourth{
+color: goldenrod;
+
+}
+.label-fourth{
+color: gold;
+}
+.title{
+  width: 100%;
+  height: 800px;
+  text-align: center;
+  font-size: 130px;
+  padding-top: 13%;
+  color: white;
+  background-color: black;
+}
