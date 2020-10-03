@@ -1,6 +1,6 @@
 
 import './styles.css';
-import  './java-script/timer.js';
+import  './java-script/trek.js';
 
 
 
