@@ -10,6 +10,7 @@ const titleDom = document.querySelector('.title');
 const ulForRenderLi = document.querySelector('.list_render');
 const formCountryDom = document.querySelector('.formCountry');
 const stopDefaultBehaviorForm = document.querySelector('form');
+const getValueFromInput = document.querySelector('input');
 capitalDom.textContent = 'Capital : ';
 populationDom.textContent = 'Population :';
 languagesDom.textContent = 'Languages : ';
@@ -25,7 +26,8 @@ handleInput.addEventListener('input', debounce((ev) => {
   containerDom.classList.remove('find');
   formCountryDom.classList.remove('find_country');
   imgDom.setAttribute('src',"https://www.nwflags.co.uk/ekmps/shops/0ec9a8/resources/design/country_flags_banner_mobile3.jpg");
-  const keyWord = ev.explicitOriginalTarget.value;
+  const keyWord = getValueFromInput.value;
+  console.log(keyWord);
   const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
   fetch(keyRequest)
   .then(response => {
@@ -34,7 +36,6 @@ handleInput.addEventListener('input', debounce((ev) => {
   .then((data) => {
     const foo = data.reduce((acc,elem ,index) =>{
       acc.push(elem.name,...elem.flag,...elem.capital,...elem.population,...elem.languages,...elem.demonym);
-      console.log(elem)
       const RenderLiDom = document.createElement('li');
       RenderLiDom.classList.add('list_render_li');
       RenderLiDom.textContent = elem.name;
@@ -42,7 +43,6 @@ handleInput.addEventListener('input', debounce((ev) => {
       return acc;
     },[]);
       if(foo.length === 6){
-        console.log(foo[4].name);
         imgDom.removeAttribute('src');
         imgDom.setAttribute('src',foo[1]);
         capitalDom.textContent = 'Capital : '+foo[2] ;
@@ -53,10 +53,8 @@ handleInput.addEventListener('input', debounce((ev) => {
         formCountryDom.classList.add('find_country');
       };
     ulForRenderLi.appendChild(fragment);
-    console.log(ulForRenderLi)
   })
   .then( (elem) => {
-    console.log(elem)
   }
   )
   .catch(error => {
