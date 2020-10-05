@@ -1,5 +1,11 @@
 export 
 let debounce = require('lodash.debounce');
+import { alert, notice, info, success, error, defaultModules } from'@pnotify/core';
+import"@pnotify/core/dist/PNotify.css";
+import"@pnotify/core/dist/BrightTheme.css";
+import fetchCountries from './fetchCountries';
+const a = `https://restcountries.eu/rest/v2/name/poland`
+fetchCountries(a);
 const fragment = document.createDocumentFragment();
 const containerDom = document.querySelector('.container');
 const capitalDom = document.querySelector('.capital');
@@ -27,14 +33,16 @@ handleInput.addEventListener('input', debounce((ev) => {
   formCountryDom.classList.remove('find_country');
   imgDom.setAttribute('src',"https://www.nwflags.co.uk/ekmps/shops/0ec9a8/resources/design/country_flags_banner_mobile3.jpg");
   const keyWord = getValueFromInput.value;
-  console.log(keyWord);
+  if(keyWord === ''){
+    return;
+  }
   const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
   fetch(keyRequest)
-  .then(response => {
-   return response.json();
-  })
+.then(response => {
+  return response.json();
+ })
   .then((data) => {
-    const foo = data.reduce((acc,elem ,index) =>{
+    const foo = data.reduce((acc,elem ,index) => {
       acc.push(elem.name,...elem.flag,...elem.capital,...elem.population,...elem.languages,...elem.demonym);
       const RenderLiDom = document.createElement('li');
       RenderLiDom.classList.add('list_render_li');
@@ -42,6 +50,13 @@ handleInput.addEventListener('input', debounce((ev) => {
       fragment.appendChild(RenderLiDom);
       return acc;
     },[]);
+
+    if(foo.length >= 36){
+      const myAlert = alert({
+        text:"please write more aim name country",
+        type: 'info'
+  });
+    }
       if(foo.length === 6){
         imgDom.removeAttribute('src');
         imgDom.setAttribute('src',foo[1]);
@@ -57,8 +72,12 @@ handleInput.addEventListener('input', debounce((ev) => {
   .then( (elem) => {
   }
   )
-  .catch(error => {
-    console.log(error,`something wrong is with server`);
+  .catch(err => {
+    const myError = error({
+            text:"we don't have country with this name."
+      });
+      
+    console.error(err,`something wrong  with server`);
   });
 }, 500 ));
 
