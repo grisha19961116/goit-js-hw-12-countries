@@ -4,8 +4,6 @@ import { alert, notice, info, success, error, defaultModules } from'@pnotify/cor
 import"@pnotify/core/dist/PNotify.css";
 import"@pnotify/core/dist/BrightTheme.css";
 import fetchCountries from './fetchCountries';
-const a = `https://restcountries.eu/rest/v2/name/poland`
-fetchCountries(a);
 const fragment = document.createDocumentFragment();
 const containerDom = document.querySelector('.container');
 const capitalDom = document.querySelector('.capital');
@@ -37,10 +35,7 @@ handleInput.addEventListener('input', debounce((ev) => {
     return;
   }
   const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
-  fetch(keyRequest)
-.then(response => {
-  return response.json();
- })
+  fetchCountries(keyRequest)
   .then((data) => {
     const foo = data.reduce((acc,elem ,index) => {
       acc.push(elem.name,...elem.flag,...elem.capital,...elem.population,...elem.languages,...elem.demonym);
