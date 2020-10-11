@@ -37,7 +37,7 @@ handleInput.addEventListener('input', debounce((ev) => {
   const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
   fetchCountries(keyRequest)
   .then((data) => {
-    const foo = data.reduce((acc,elem ,index) => {
+    const dataFromServer = data.reduce((acc,elem ,index) => {
       acc.push(elem.name,...elem.flag,...elem.capital,...elem.population,...elem.languages,...elem.demonym);
       const RenderLiDom = document.createElement('li');
       RenderLiDom.classList.add('list_render_li');
@@ -46,32 +46,25 @@ handleInput.addEventListener('input', debounce((ev) => {
       return acc;
     },[]);
 
-    if(foo.length >= 36){
+    if(dataFromServer.length >= 36){
       const myAlert = alert({
         text:"please write more aim name country",
         type: 'info'
   });
     }
-      if(foo.length === 6){
+      if(dataFromServer.length === 6){
         imgDom.removeAttribute('src');
-        imgDom.setAttribute('src',foo[1]);
-        capitalDom.textContent = 'Capital : '+foo[2] ;
-        populationDom.textContent = 'Population : '+foo[3];
-        languagesDom.textContent = 'Languages : ' +foo[4].name;
-        titleDom.textContent = 'Name country which we are searching : '+foo[5];
+        imgDom.setAttribute('src',dataFromServer[1]);
+        capitalDom.textContent = 'Capital : '+ dataFromServer[2] ;
+        populationDom.textContent = 'Population : '+ dataFromServer[3];
+        languagesDom.textContent = 'Languages : ' + dataFromServer[4].name;
+        titleDom.textContent = 'Name country which we are searching : '+ dataFromServer[5];
         containerDom.classList.add('find');
         formCountryDom.classList.add('find_country');
       };
     ulForRenderLi.appendChild(fragment);
   })
-  .then( (elem) => {
-  }
-  )
   .catch(err => {
-    const myError = error({
-            text:"we don't have country with this name."
-      });
-      
     console.error(err,`something wrong  with server`);
   });
 }, 500 ));
