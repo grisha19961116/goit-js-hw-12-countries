@@ -37,6 +37,12 @@ handleInput.addEventListener('input', debounce((ev) => {
   const keyRequest = `https://restcountries.eu/rest/v2/name/${keyWord}`;
   fetchCountries(keyRequest)
   .then((data) => {
+    if(data.length >= 10){
+      const myAlert = alert({
+        text:"please write more aim name country",
+        type: 'info'});
+  return;
+    }
     const dataFromServer = data.reduce((acc,elem ,index) => {
       acc.push(elem.name,...elem.flag,...elem.capital,...elem.population,...elem.languages,...elem.demonym);
       const RenderLiDom = document.createElement('li');
@@ -46,12 +52,6 @@ handleInput.addEventListener('input', debounce((ev) => {
       return acc;
     },[]);
 
-    if(dataFromServer.length >= 36){
-      const myAlert = alert({
-        text:"please write more aim name country",
-        type: 'info'
-  });
-    }
       if(dataFromServer.length === 6){
         imgDom.removeAttribute('src');
         imgDom.setAttribute('src',dataFromServer[1]);
