@@ -25,7 +25,7 @@ color: rgb(121, 116, 116);
   
 }
 .container{
-  height: 90vh;
+  min-height: 90vh;
   background-color: rgb(85, 83, 83);
   color: rgb(196, 186, 186);
 }
@@ -36,13 +36,13 @@ color: rgb(121, 116, 116);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 50px 0;
+  padding: 10px 0;
 }
 .title{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 5vh;
   margin: 0;
   font-size: 30px;
 }
