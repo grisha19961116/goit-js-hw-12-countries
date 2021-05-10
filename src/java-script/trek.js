@@ -68,7 +68,12 @@ handleInput.addEventListener(
           imgDom.setAttribute('src', dataFromServer[1]);
           capitalDom.textContent = 'Capital : ' + dataFromServer[2];
           populationDom.textContent = 'Population : ' + dataFromServer[3];
-          languagesDom.textContent = 'Languages : ' + dataFromServer[4].name;
+          languagesDom.textContent = `Languages :${
+            dataFromServer[4][0].name
+              ? dataFromServer[4][0].name
+              : dataFromServer[4][0].iso639_1
+          }`;
+          console.log(languagesDom.textContent);
           titleDom.textContent = 'Search country is ' + dataFromServer[5];
           containerDom.classList.add('find');
         }
